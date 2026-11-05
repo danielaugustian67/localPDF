@@ -1,0 +1,21 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64" width="64" height="64" fill="none">
+  <!-- Rounded app icon badge -->
+  <rect width="64" height="64" rx="14" fill="#E11D48"/>
+  <!-- Pure white folded PDF document -->
+  <path d="M18 13C18 11.8954 18.8954 11 20 11H38L50 23V51C50 52.1046 49.1046 53 48 53H20C18.8954 53 18 52.1046 18 51V13Z"
+        stroke="#FFFFFF"
+        stroke-width="3"
+        stroke-linejoin="round"
+        fill="#FFFFFF"
+        fill-opacity="0.18"/>
+  <!-- Folded corner tab -->
+  <path d="M38 11V23H50"
+        stroke="#FFFFFF"
+        stroke-width="3"
+        stroke-linecap="round"
+        stroke-linejoin="round"/>
+  <!-- Document text stripes -->
+  <path d="M26 31H42" stroke="#FFFFFF" stroke-width="3" stroke-linecap="round"/>
+  <path d="M26 38H42" stroke="#FFFFFF" stroke-width="3" stroke-linecap="round"/>
+  <path d="M26 45H34" stroke="#FFFFFF" stroke-width="3" stroke-linecap="round"/>
+</svg>

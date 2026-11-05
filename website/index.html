@@ -1,0 +1,406 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>LocalPDF — Desktop PDF & OCR</title>
+  <meta name="description" content="15 alat PDF dan OCR offline. Cepat, privat, tanpa koneksi internet untuk macOS dan Windows." />
+  <link rel="icon" type="image/svg+xml" href="./logo.svg" />
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script src="https://unpkg.com/lucide@latest"></script>
+  <script>
+    tailwind.config = {
+      theme: {
+        extend: {
+          fontFamily: {
+            sans: ['"Plus Jakarta Sans"', 'system-ui', 'sans-serif'],
+            mono: ['"JetBrains Mono"', 'monospace']
+          },
+          colors: {
+            brand: {
+              50: '#fff1f2',
+              100: '#ffe4e6',
+              500: '#f43f5e',
+              600: '#e11d48',
+              700: '#be123c'
+            }
+          },
+          boxShadow: {
+            soft: '0 2px 8px 0 rgba(0,0,0,0.04)',
+            card: '0 8px 24px -4px rgba(0,0,0,0.06)',
+            hover: '0 16px 32px -8px rgba(0,0,0,0.10)'
+          }
+        }
+      }
+    }
+  </script>
+  <style>
+    body {
+      background-color: #F8F9FA;
+      background-image:
+        radial-gradient(at 15% 15%, rgba(244, 63, 94, 0.07) 0px, transparent 50%),
+        radial-gradient(at 85% 20%, rgba(59, 130, 246, 0.06) 0px, transparent 50%),
+        radial-gradient(at 50% 80%, rgba(245, 158, 11, 0.05) 0px, transparent 60%),
+        url("data:image/svg+xml,%3Csvg width='60' height='60' viewBox='0 0 60 60' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='none' fill-rule='evenodd'%3E%3Cg fill='%2394a3b8' fill-opacity='0.12'%3E%3Cpath d='M36 34v-4h-2v4h-4v2h4v4h2v-4h4v-2h-4zm0-30V0h-2v4h-4v2h4v4h2V6h4V4h-4zM6 34v-4H4v4H0v2h4v4h2v-4h4v-2H6zM6 4V0H4v4H0v2h4v4h2V6h4V4H6z'/%3E%3C/g%3E%3C/g%3E%3C/svg%3E");
+      background-attachment: fixed;
+    }
+    .dot-grid {
+      background-image:
+        linear-gradient(to right, rgba(226, 232, 240, 0.6) 1px, transparent 1px),
+        linear-gradient(to bottom, rgba(226, 232, 240, 0.6) 1px, transparent 1px);
+      background-size: 32px 32px;
+    }
+    .feature-card { transition: transform 0.2s ease, box-shadow 0.2s ease; }
+    .feature-card:hover { transform: translateY(-2px); }
+  </style>
+</head>
+<body class="font-sans text-zinc-900 antialiased">
+
+  <!-- Header -->
+  <header class="sticky top-0 z-50 bg-white/85 backdrop-blur-md border-b border-zinc-200/70">
+    <div class="max-w-5xl mx-auto px-5 h-14 flex items-center justify-between">
+      <a href="#" class="flex items-center gap-2.5">
+        <div class="w-7 h-7 rounded-lg bg-brand-600 flex items-center justify-center shadow-sm">
+          <svg viewBox="0 0 24 24" fill="none" class="w-3.5 h-3.5 text-white">
+            <path d="M6 3h8l5 5v13a1 1 0 0 1-1 1H6a1 1 0 0 1-1-1V4a1 1 0 0 1 1-1z" fill="currentColor" fill-opacity="0.15" stroke="currentColor" stroke-width="2"/>
+            <path d="M14 3v5h5" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
+          </svg>
+        </div>
+        <span class="font-bold text-sm tracking-tight text-zinc-950">Local<span class="text-brand-600">PDF</span></span>
+      </a>
+      <nav class="hidden sm:flex items-center gap-6 text-xs font-medium text-zinc-500">
+        <a href="#fitur" class="hover:text-zinc-900 transition-colors">Fitur</a>
+        <a href="#unduh" class="hover:text-zinc-900 transition-colors">Unduh</a>
+        <a href="https://github.com/danielaugustian67/localPDF" target="_blank" rel="noopener" class="flex items-center gap-1.5 text-zinc-600 hover:text-zinc-900">
+          <i data-lucide="github" class="w-3.5 h-3.5"></i>
+          <span>GitHub</span>
+        </a>
+      </nav>
+      <a href="#unduh" class="inline-flex items-center gap-1.5 px-3.5 py-1.5 rounded-xl bg-zinc-950 hover:bg-zinc-800 text-white text-xs font-semibold transition-all active:scale-95">
+        <i data-lucide="download" class="w-3.5 h-3.5 text-brand-500"></i>
+        <span>Unduh</span>
+      </a>
+    </div>
+  </header>
+
+  <!-- Hero -->
+  <section class="pt-14 pb-12 dot-grid border-b border-zinc-200/60">
+    <div class="max-w-4xl mx-auto px-5 text-center">
+
+      <!-- Badge -->
+      <div class="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-white border border-zinc-200 shadow-soft text-xs font-medium text-zinc-600 mb-6">
+        <span class="flex h-1.5 w-1.5 relative">
+          <span class="animate-ping absolute inline-flex h-full w-full rounded-full bg-emerald-400 opacity-75"></span>
+          <span class="relative inline-flex rounded-full h-1.5 w-1.5 bg-emerald-600"></span>
+        </span>
+        100% Offline &bull; Tanpa akun &bull; Gratis
+      </div>
+
+      <!-- Headline -->
+      <h1 class="text-4xl sm:text-5xl font-extrabold tracking-tight text-zinc-950 leading-[1.12]">
+        Proses PDF langsung<br class="hidden sm:block" /> di komputer Anda.
+      </h1>
+      <p class="mt-4 text-base text-zinc-600 max-w-xl mx-auto leading-relaxed">
+        Aplikasi desktop untuk merge, split, kompres, konversi, dan OCR tanpa koneksi internet.
+        Semua diproses di RAM komputer &mdash; berkas tidak pernah dikirim ke mana pun.
+      </p>
+
+      <!-- CTA Buttons -->
+      <div class="mt-7 flex flex-wrap items-center justify-center gap-3">
+        <a id="btn-hero-main" href="https://github.com/danielaugustian67/localPDF/releases/download/v1.0.0/LocalPDF-1.0.0-mac-arm64.dmg"
+           class="inline-flex items-center gap-2 px-5 py-2.5 rounded-xl bg-brand-600 hover:bg-brand-700 text-white text-sm font-semibold shadow-sm transition-all active:scale-95">
+          <i data-lucide="download" class="w-4 h-4"></i>
+          <span id="btn-hero-text">Unduh untuk macOS</span>
+        </a>
+        <a href="https://github.com/danielaugustian67/localPDF/releases/download/v1.0.0/LocalPDF-Setup-1.0.0-x64.exe"
+           class="inline-flex items-center gap-2 px-5 py-2.5 rounded-xl bg-white hover:bg-zinc-50 border border-zinc-200 text-zinc-800 text-sm font-semibold shadow-soft transition-all active:scale-95">
+          <i data-lucide="monitor" class="w-4 h-4 text-zinc-500"></i>
+          <span>Windows (.exe)</span>
+        </a>
+      </div>
+
+      <!-- App Preview Mockup -->
+      <div class="mt-12 rounded-2xl border border-zinc-200/80 bg-white shadow-card overflow-hidden max-w-3xl mx-auto">
+        <!-- Window Chrome -->
+        <div class="flex items-center gap-2 px-4 py-3 bg-zinc-50 border-b border-zinc-100">
+          <span class="w-2.5 h-2.5 rounded-full bg-rose-400"></span>
+          <span class="w-2.5 h-2.5 rounded-full bg-amber-400"></span>
+          <span class="w-2.5 h-2.5 rounded-full bg-emerald-400"></span>
+          <span class="ml-2 text-[11px] font-mono text-zinc-500">LocalPDF &mdash; Offline</span>
+        </div>
+        <!-- App Content -->
+        <div class="p-5 grid grid-cols-12 gap-4 bg-zinc-50/40 text-left">
+          <!-- Sidebar -->
+          <div class="col-span-3 space-y-1 pr-3 border-r border-zinc-200/80 hidden sm:block">
+            <div class="text-[10px] font-mono font-bold text-zinc-600 uppercase tracking-wider px-2 py-1.5">Alat</div>
+            <div class="px-2.5 py-1.5 rounded-lg bg-white border border-zinc-200 shadow-soft text-xs font-semibold text-zinc-900 flex items-center gap-2">
+              <i data-lucide="scan-text" class="w-3.5 h-3.5 text-brand-600"></i> OCR PDF
+            </div>
+            <div class="px-2.5 py-1.5 rounded-lg text-xs text-zinc-500 hover:text-zinc-800 flex items-center gap-2">
+              <i data-lucide="files" class="w-3.5 h-3.5"></i> Merge PDF
+            </div>
+            <div class="px-2.5 py-1.5 rounded-lg text-xs text-zinc-500 hover:text-zinc-800 flex items-center gap-2">
+              <i data-lucide="minimize-2" class="w-3.5 h-3.5"></i> Kompres
+            </div>
+            <div class="px-2.5 py-1.5 rounded-lg text-xs text-zinc-500 hover:text-zinc-800 flex items-center gap-2">
+              <i data-lucide="file-signature" class="w-3.5 h-3.5"></i> eSign
+            </div>
+            <div class="px-2.5 py-1.5 rounded-lg text-xs text-zinc-500 hover:text-zinc-800 flex items-center gap-2">
+              <i data-lucide="file-text" class="w-3.5 h-3.5"></i> PDF &rarr; Word
+            </div>
+          </div>
+          <!-- Main Stage -->
+          <div class="col-span-12 sm:col-span-9 space-y-3">
+            <div class="flex items-center justify-between pb-3 border-b border-zinc-100">
+              <div>
+                <div class="text-sm font-bold text-zinc-950">OCR PDF</div>
+                <div class="text-[11px] text-zinc-500 mt-0.5">Tesseract WebAssembly &bull; 100% lokal</div>
+              </div>
+              <span class="text-[10px] font-mono px-2 py-1 rounded-lg bg-emerald-50 text-emerald-700 font-semibold border border-emerald-200">Selesai</span>
+            </div>
+            <div class="p-3.5 bg-zinc-50 rounded-xl border border-zinc-200/70 space-y-2">
+              <div class="text-[11px] font-semibold text-zinc-600">Hasil ekstraksi:</div>
+              <p class="text-xs text-zinc-800 font-mono leading-relaxed">
+                TOKO SUMBER MAKMUR<br>
+                Nota: 0457 &mdash; Beras 5 kg Rp 72.000<br>
+                TOTAL: Rp 125.000
+              </p>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Floating Pills -->
+      <div class="mt-6 flex flex-wrap justify-center gap-2.5 max-w-2xl mx-auto">
+        <div class="flex items-center gap-2 px-3 py-1.5 rounded-full bg-white border border-zinc-200 shadow-soft text-[11px] font-medium text-zinc-600">
+          <i data-lucide="shield-check" class="w-3.5 h-3.5 text-emerald-600"></i>
+          Nol data terkirim ke internet
+        </div>
+        <div class="flex items-center gap-2 px-3 py-1.5 rounded-full bg-white border border-zinc-200 shadow-soft text-[11px] font-medium text-zinc-600">
+          <i data-lucide="zap" class="w-3.5 h-3.5 text-amber-600"></i>
+          15 alat desktop
+        </div>
+        <div class="flex items-center gap-2 px-3 py-1.5 rounded-full bg-white border border-zinc-200 shadow-soft text-[11px] font-medium text-zinc-600">
+          <i data-lucide="heart" class="w-3.5 h-3.5 text-brand-600"></i>
+          Open Source (MIT)
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Fitur Grid -->
+  <section id="fitur" class="py-16 bg-white border-y border-zinc-200/60">
+    <div class="max-w-4xl mx-auto px-5">
+      <div class="text-center mb-10">
+        <h2 class="text-xs font-mono font-bold text-brand-600 uppercase tracking-widest">Fitur</h2>
+        <h3 class="mt-2 text-2xl font-extrabold text-zinc-950 tracking-tight">Peralatan PDF Lengkap</h3>
+        <p class="mt-1 text-sm text-zinc-600">Semua perkakas esensial dalam satu aplikasi desktop.</p>
+      </div>
+
+      <div class="grid grid-cols-2 md:grid-cols-3 gap-3">
+
+        <div class="feature-card p-4 rounded-2xl bg-zinc-50 border border-zinc-200/80 hover:border-zinc-300 hover:shadow-card">
+          <div class="w-8 h-8 rounded-xl bg-brand-50 border border-brand-100 flex items-center justify-center text-brand-600 mb-3">
+            <i data-lucide="scan-text" class="w-4 h-4"></i>
+          </div>
+          <div class="text-sm font-bold text-zinc-950">OCR PDF</div>
+          <div class="text-[11px] text-zinc-500 mt-0.5">Ekstrak teks dari scan dokumen & nota.</div>
+        </div>
+
+        <div class="feature-card p-4 rounded-2xl bg-zinc-50 border border-zinc-200/80 hover:border-zinc-300 hover:shadow-card">
+          <div class="w-8 h-8 rounded-xl bg-blue-50 border border-blue-100 flex items-center justify-center text-blue-600 mb-3">
+            <i data-lucide="files" class="w-4 h-4"></i>
+          </div>
+          <div class="text-sm font-bold text-zinc-950">Merge PDF</div>
+          <div class="text-[11px] text-zinc-500 mt-0.5">Gabung puluhan file jadi satu urutan.</div>
+        </div>
+
+        <div class="feature-card p-4 rounded-2xl bg-zinc-50 border border-zinc-200/80 hover:border-zinc-300 hover:shadow-card">
+          <div class="w-8 h-8 rounded-xl bg-amber-50 border border-amber-100 flex items-center justify-center text-amber-600 mb-3">
+            <i data-lucide="split" class="w-4 h-4"></i>
+          </div>
+          <div class="text-sm font-bold text-zinc-950">Split PDF</div>
+          <div class="text-[11px] text-zinc-500 mt-0.5">Pisah halaman sesuai rentang kustom.</div>
+        </div>
+
+        <div class="feature-card p-4 rounded-2xl bg-zinc-50 border border-zinc-200/80 hover:border-zinc-300 hover:shadow-card">
+          <div class="w-8 h-8 rounded-xl bg-purple-50 border border-purple-100 flex items-center justify-center text-purple-600 mb-3">
+            <i data-lucide="file-signature" class="w-4 h-4"></i>
+          </div>
+          <div class="text-sm font-bold text-zinc-950">eSign & Redaksi</div>
+          <div class="text-[11px] text-zinc-500 mt-0.5">Tanda tangan dan sensor teks sensitif.</div>
+        </div>
+
+        <div class="feature-card p-4 rounded-2xl bg-zinc-50 border border-zinc-200/80 hover:border-zinc-300 hover:shadow-card">
+          <div class="w-8 h-8 rounded-xl bg-sky-50 border border-sky-100 flex items-center justify-center text-sky-600 mb-3">
+            <i data-lucide="file-text" class="w-4 h-4"></i>
+          </div>
+          <div class="text-sm font-bold text-zinc-950">PDF &rarr; Word</div>
+          <div class="text-[11px] text-zinc-500 mt-0.5">Konversi ke format .docx siap edit.</div>
+        </div>
+
+        <div class="feature-card p-4 rounded-2xl bg-zinc-50 border border-zinc-200/80 hover:border-zinc-300 hover:shadow-card">
+          <div class="w-8 h-8 rounded-xl bg-emerald-50 border border-emerald-100 flex items-center justify-center text-emerald-600 mb-3">
+            <i data-lucide="file-spreadsheet" class="w-4 h-4"></i>
+          </div>
+          <div class="text-sm font-bold text-zinc-950">PDF &rarr; Excel</div>
+          <div class="text-[11px] text-zinc-500 mt-0.5">Deteksi dan ekstrak tabel ke .xlsx.</div>
+        </div>
+
+        <div class="feature-card p-4 rounded-2xl bg-zinc-50 border border-zinc-200/80 hover:border-zinc-300 hover:shadow-card">
+          <div class="w-8 h-8 rounded-xl bg-rose-50 border border-rose-100 flex items-center justify-center text-rose-600 mb-3">
+            <i data-lucide="minimize-2" class="w-4 h-4"></i>
+          </div>
+          <div class="text-sm font-bold text-zinc-950">Kompres PDF</div>
+          <div class="text-[11px] text-zinc-500 mt-0.5">Kecilkan ukuran file hingga 80%.</div>
+        </div>
+
+        <div class="feature-card p-4 rounded-2xl bg-zinc-50 border border-zinc-200/80 hover:border-zinc-300 hover:shadow-card">
+          <div class="w-8 h-8 rounded-xl bg-indigo-50 border border-indigo-100 flex items-center justify-center text-indigo-600 mb-3">
+            <i data-lucide="git-compare" class="w-4 h-4"></i>
+          </div>
+          <div class="text-sm font-bold text-zinc-950">Bandingkan PDF</div>
+          <div class="text-[11px] text-zinc-500 mt-0.5">Diff visual side-by-side dua dokumen.</div>
+        </div>
+
+        <div class="feature-card p-4 rounded-2xl bg-zinc-50 border border-zinc-200/80 hover:border-zinc-300 hover:shadow-card">
+          <div class="w-8 h-8 rounded-xl bg-teal-50 border border-teal-100 flex items-center justify-center text-teal-600 mb-3">
+            <i data-lucide="wrench" class="w-4 h-4"></i>
+          </div>
+          <div class="text-sm font-bold text-zinc-950">Perbaiki PDF</div>
+          <div class="text-[11px] text-zinc-500 mt-0.5">Pulihkan berkas rusak atau korup.</div>
+        </div>
+
+        <div class="feature-card p-4 rounded-2xl bg-zinc-50 border border-zinc-200/80 hover:border-zinc-300 hover:shadow-card">
+          <div class="w-8 h-8 rounded-xl bg-orange-50 border border-orange-100 flex items-center justify-center text-orange-600 mb-3">
+            <i data-lucide="shield-check" class="w-4 h-4"></i>
+          </div>
+          <div class="text-sm font-bold text-zinc-950">Sanitasi Metadata</div>
+          <div class="text-[11px] text-zinc-500 mt-0.5">Hapus jejak identitas pembuat.</div>
+        </div>
+
+        <div class="feature-card p-4 rounded-2xl bg-zinc-50 border border-zinc-200/80 hover:border-zinc-300 hover:shadow-card">
+          <div class="w-8 h-8 rounded-xl bg-pink-50 border border-pink-100 flex items-center justify-center text-pink-600 mb-3">
+            <i data-lucide="image" class="w-4 h-4"></i>
+          </div>
+          <div class="text-sm font-bold text-zinc-950">Gambar &rarr; PDF</div>
+          <div class="text-[11px] text-zinc-500 mt-0.5">Satukan kumpulan foto jadi satu PDF.</div>
+        </div>
+
+        <div class="feature-card p-4 rounded-2xl bg-zinc-50 border border-zinc-200/80 hover:border-zinc-300 hover:shadow-card">
+          <div class="w-8 h-8 rounded-xl bg-cyan-50 border border-cyan-100 flex items-center justify-center text-cyan-600 mb-3">
+            <i data-lucide="file-image" class="w-4 h-4"></i>
+          </div>
+          <div class="text-sm font-bold text-zinc-950">PDF &rarr; Gambar</div>
+          <div class="text-[11px] text-zinc-500 mt-0.5">Ekstrak lembar dokumen ke format PNG.</div>
+        </div>
+
+      </div>
+    </div>
+  </section>
+
+  <!-- Unduh Section -->
+  <section id="unduh" class="py-16 bg-zinc-50/60 border-t border-zinc-200/60">
+    <div class="max-w-3xl mx-auto px-5 text-center">
+      <h2 class="text-2xl font-extrabold text-zinc-950 tracking-tight">Unduh LocalPDF</h2>
+      <p class="mt-2 text-sm text-zinc-600">Rilis stabil v1.0.0 &bull; Gratis &bull; Siap pasang.</p>
+
+      <div class="mt-8 grid grid-cols-1 sm:grid-cols-2 gap-3 text-left">
+        <a href="https://github.com/danielaugustian67/localPDF/releases/download/v1.0.0/LocalPDF-1.0.0-mac-arm64.dmg"
+           class="flex items-start gap-3 p-4 rounded-2xl bg-white border border-zinc-200/80 hover:border-zinc-400 hover:shadow-card transition-all group">
+          <div class="w-10 h-10 rounded-xl bg-zinc-100 flex items-center justify-center text-zinc-700 shrink-0 group-hover:scale-105 transition-transform">
+            <i data-lucide="apple" class="w-5 h-5"></i>
+          </div>
+          <div>
+            <div class="text-sm font-bold text-zinc-950">macOS (Apple Silicon)</div>
+            <div class="text-[11px] font-mono text-zinc-500 mt-0.5">Chip M1 / M2 / M3 / M4</div>
+            <div class="text-[11px] font-mono text-zinc-400 mt-1">.dmg &bull; ~95 MB</div>
+          </div>
+        </a>
+
+        <a href="https://github.com/danielaugustian67/localPDF/releases/download/v1.0.0/LocalPDF-1.0.0-mac-x64.dmg"
+           class="flex items-start gap-3 p-4 rounded-2xl bg-white border border-zinc-200/80 hover:border-zinc-400 hover:shadow-card transition-all group">
+          <div class="w-10 h-10 rounded-xl bg-zinc-100 flex items-center justify-center text-zinc-700 shrink-0 group-hover:scale-105 transition-transform">
+            <i data-lucide="apple" class="w-5 h-5"></i>
+          </div>
+          <div>
+            <div class="text-sm font-bold text-zinc-950">macOS (Intel)</div>
+            <div class="text-[11px] font-mono text-zinc-500 mt-0.5">Prosesor Intel 64-bit</div>
+            <div class="text-[11px] font-mono text-zinc-400 mt-1">.dmg &bull; ~95 MB</div>
+          </div>
+        </a>
+
+        <a href="https://github.com/danielaugustian67/localPDF/releases/download/v1.0.0/LocalPDF-Setup-1.0.0-x64.exe"
+           class="flex items-start gap-3 p-4 rounded-2xl bg-white border border-zinc-200/80 hover:border-zinc-400 hover:shadow-card transition-all group">
+          <div class="w-10 h-10 rounded-xl bg-zinc-100 flex items-center justify-center text-zinc-700 shrink-0 group-hover:scale-105 transition-transform">
+            <i data-lucide="monitor" class="w-5 h-5"></i>
+          </div>
+          <div>
+            <div class="text-sm font-bold text-zinc-950">Windows Setup</div>
+            <div class="text-[11px] font-mono text-zinc-500 mt-0.5">Windows 10 / 11 64-bit</div>
+            <div class="text-[11px] font-mono text-zinc-400 mt-1">.exe NSIS &bull; ~110 MB</div>
+          </div>
+        </a>
+
+        <a href="https://github.com/danielaugustian67/localPDF/releases/download/v1.0.0/LocalPDF-1.0.0-win-x64.zip"
+           class="flex items-start gap-3 p-4 rounded-2xl bg-white border border-zinc-200/80 hover:border-zinc-400 hover:shadow-card transition-all group">
+          <div class="w-10 h-10 rounded-xl bg-zinc-100 flex items-center justify-center text-zinc-700 shrink-0 group-hover:scale-105 transition-transform">
+            <i data-lucide="archive" class="w-5 h-5"></i>
+          </div>
+          <div>
+            <div class="text-sm font-bold text-zinc-950">Windows Portable</div>
+            <div class="text-[11px] font-mono text-zinc-500 mt-0.5">Versi ZIP tanpa instalasi</div>
+            <div class="text-[11px] font-mono text-zinc-400 mt-1">.zip &bull; ~105 MB</div>
+          </div>
+        </a>
+      </div>
+
+      <div class="mt-6 flex items-center justify-center gap-4 text-[11px] font-mono text-zinc-400">
+        <a href="https://github.com/danielaugustian67/localPDF/releases/tag/v1.0.0" target="_blank" rel="noopener" class="hover:text-zinc-600 transition-colors">Catatan Rilis v1.0.0</a>
+        <span>&middot;</span>
+        <a href="https://github.com/danielaugustian67/localPDF" target="_blank" rel="noopener" class="hover:text-zinc-600 transition-colors">Source Code</a>
+      </div>
+    </div>
+  </section>
+
+  <!-- Footer -->
+  <footer class="border-t border-zinc-200/60 bg-white py-8">
+    <div class="max-w-5xl mx-auto px-5 flex flex-col sm:flex-row items-center justify-between gap-3 text-[11px] font-mono text-zinc-500">
+      <div class="flex items-center gap-2">
+        <div class="w-5 h-5 rounded-md bg-brand-600 flex items-center justify-center">
+          <svg viewBox="0 0 24 24" fill="none" class="w-2.5 h-2.5 text-white">
+            <path d="M6 3h8l5 5v13a1 1 0 0 1-1 1H6a1 1 0 0 1-1-1V4a1 1 0 0 1 1-1z" fill="currentColor" fill-opacity="0.2" stroke="currentColor" stroke-width="2"/>
+          </svg>
+        </div>
+        <span class="font-bold text-zinc-800">LocalPDF</span>
+        <span>&middot;</span>
+        <span>Lisensi MIT &bull; Gratis &bull; Open Source</span>
+      </div>
+      <a href="https://github.com/danielaugustian67/localPDF" target="_blank" rel="noopener" class="flex items-center gap-1.5 hover:text-zinc-800 transition-colors">
+        <i data-lucide="github" class="w-3.5 h-3.5"></i>
+        <span>GitHub Repository</span>
+      </a>
+    </div>
+  </footer>
+
+  <script>
+    lucide.createIcons();
+
+    // Auto-detect OS untuk tombol unduh utama
+    const ua = navigator.userAgent.toLowerCase();
+    const btnMain = document.getElementById('btn-hero-main');
+    const btnText = document.getElementById('btn-hero-text');
+
+    if (/win/.test(ua)) {
+      btnMain.href = 'https://github.com/danielaugustian67/localPDF/releases/download/v1.0.0/LocalPDF-Setup-1.0.0-x64.exe';
+      btnText.textContent = 'Unduh untuk Windows';
+    } else if (/mac/.test(ua)) {
+      btnMain.href = 'https://github.com/danielaugustian67/localPDF/releases/download/v1.0.0/LocalPDF-1.0.0-mac-arm64.dmg';
+      btnText.textContent = 'Unduh untuk macOS';
+    }
+  </script>
+</body>
+</html>
