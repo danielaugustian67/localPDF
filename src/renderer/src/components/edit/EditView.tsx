@@ -11,6 +11,7 @@ import {
   LayoutTemplate,
   RotateCw,
   RotateCcw,
+  Undo2,
   Trash2,
   Stamp,
   Hash,

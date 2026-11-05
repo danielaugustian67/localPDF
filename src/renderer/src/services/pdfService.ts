@@ -7,7 +7,9 @@ import {
   SplitResultFile,
   CompressLevel,
   ImageFileItem,
-  ImageToPdfOptions
+  ImageToPdfOptions,
+  PDFMetadata,
+  NUpLayout
 } from '../types'
 
 /**
@@ -420,7 +422,7 @@ export async function getPDFMetadata(pdfBytes: Uint8Array): Promise<PDFMetadata>
     title: doc.getTitle() || '',
     author: doc.getAuthor() || '',
     subject: doc.getSubject() || '',
-    keywords: (doc.getKeywords() || []).join(', '),
+    keywords: doc.getKeywords() || '',
     creator: doc.getCreator() || '',
     producer: doc.getProducer() || '',
     creationDate: creationDate ? creationDate.toLocaleString('id-ID') : 'Tidak tercatat',
@@ -445,7 +447,7 @@ export async function sanitizePDFMetadata(
       doc.setKeywords(
         customMetadata.keywords
           .split(',')
-          .map((k) => k.trim())
+          .map((k: string) => k.trim())
           .filter(Boolean)
       )
     }
