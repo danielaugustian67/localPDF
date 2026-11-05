@@ -1,0 +1,19 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 48 48" width="48" height="48" fill="none">
+  <!-- Clean white document body with folded corner on transparent background -->
+  <path d="M10 6C10 4.89543 10.8954 4 12 4H30L40 14V42C40 43.1046 39.1046 44 38 44H12C10.8954 44 10 43.1046 10 42V6Z"
+        stroke="#FFFFFF"
+        stroke-width="3"
+        stroke-linejoin="round"
+        fill="#FFFFFF"
+        fill-opacity="0.12"/>
+  <!-- Folded corner tab -->
+  <path d="M30 4V14H40"
+        stroke="#FFFFFF"
+        stroke-width="3"
+        stroke-linecap="round"
+        stroke-linejoin="round"/>
+  <!-- White document text stripes -->
+  <path d="M18 22H32" stroke="#FFFFFF" stroke-width="3" stroke-linecap="round"/>
+  <path d="M18 29H32" stroke="#FFFFFF" stroke-width="3" stroke-linecap="round"/>
+  <path d="M18 36H26" stroke="#FFFFFF" stroke-width="3" stroke-linecap="round"/>
+</svg>
